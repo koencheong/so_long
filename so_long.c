@@ -25,7 +25,16 @@ int	main(void)
 	int		size;
 	void	*background;
 	void	*chibi_maruko;
+	// void	*wall;
+	int		x;
+	int		y;
+	int		fd;
+	char	buf[1024];
+	ssize_t	bytes_read;
 
+	bytes_read = 0;
+
+	x = 0;
 	ptr.mlx_ptr = mlx_init();
 	if (ptr.mlx_ptr == NULL)
 		return (1);
@@ -36,18 +45,46 @@ int	main(void)
 		return (1);
 	}
 
-	background = mlx_xpm_file_to_image(ptr.mlx_ptr, "images/background.xpm", &size, &size);
+	background = mlx_xpm_file_to_image(ptr.mlx_ptr, "images/purple.xpm", &size, &size);
 	if (background == NULL)
 		return (1);
-	chibi_maruko = mlx_xpm_file_to_image(ptr.mlx_ptr, "images/maruko2.xpm", &size, &size);
+	chibi_maruko = mlx_xpm_file_to_image(ptr.mlx_ptr, "images/maruko.xpm", &size, &size);
 	if (chibi_maruko == NULL)
 		return (1);
+	// wall = mlx_xpm_file_to_image(ptr.mlx_ptr, "images/brick.xpm", &size, &size);
+	// if (wall == NULL)
+	// 	return (1);
 
-	mlx_put_image_to_window(ptr.mlx_ptr, ptr.win_ptr, background, 0, 0);
-	mlx_put_image_to_window(ptr.mlx_ptr, ptr.win_ptr, chibi_maruko, 0, 0);
+	while (x < 900)
+	{
+		y = 0;
+		while (y < 900)
+		{
+			mlx_put_image_to_window(ptr.mlx_ptr, ptr.win_ptr, background, x, y);
+			y += 50;
+		}
+		x += 50;
+	}
+
+	// mlx_put_image_to_window(ptr.mlx_ptr, ptr.win_ptr, wall, 0, 0);
 
 	// mlx_key_hook(ptr.win_ptr, &w_up, &ptr);
 
+	fd = open("map.ber", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		exit(EXIT_FAILURE);
+	}
+	bytes_read = read(fd, buf, sizeof(buf) - 1);
+	if (bytes_read == -1)
+	{
+		perror("Error reading file");
+		exit(EXIT_FAILURE);
+	}
+	buf[bytes_read] = '\0';
+	printf("%s\n", buf);
+	close(fd);
 
 	mlx_loop(ptr.mlx_ptr);
 

@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <X11/keysym.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h>
 
 typedef struct s_connections
 {
