@@ -25,6 +25,6 @@ clean:
 	rm -f *.o 
 
 fclean: clean
-	rm -f $(NAME) libft.a libft/ft_printf/libftprintf.a libft/get_next_line/libftgnl.a
+	rm -f $(NAME) libft/libft.a libft/ft_printf/libftprintf.a libft/get_next_line/libftgnl.a
 
 re: fclean all
