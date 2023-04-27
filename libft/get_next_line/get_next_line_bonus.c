@@ -6,7 +6,7 @@
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:38:43 by kcheong           #+#    #+#             */
-/*   Updated: 2022/07/27 23:50:33 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/04/23 12:36:42 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*get_next_line(int fd)
 	storage[fd] = read_join(fd, storage[fd], buffer);
 	if (!storage[fd] || *storage[fd] == '\0')
 	{
-		free(storage[fd]);
+		// free(storage[fd]);
 		return (NULL);
 	}
 	line = return_line(storage[fd]);

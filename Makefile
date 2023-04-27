@@ -1,7 +1,7 @@
 NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC = so_long.c
+SRC = so_long_draft.c
 LIB = -L/usr/local/lib/libmlx.a 
 INC = -lmlx -lGL -lX11 -lXext
 
