@@ -1,24 +1,44 @@
 #include "so_long.h"
 
-int	handle_no_event()
-{
-	return (0);
-}
-
 int w_up(int keysym, t_ptr *ptr)
 {
 	printf("hihi\n");
 	if (keysym == 13)
-		printf("hi\n");
+	{
+		printf("yes\n");
 		// mlx_put_image_to_window(ptr.mlx_ptr, ptr.win_ptr, chibi_maruko, (x-1)*100, 0*110);
+	}	
 	(void)ptr;
 	return (0);
 }
 
+char	**chgarray(int i, int j)
+{
+	char **arr;
+	char *string;
+	int	x;
+	int	fd;
+
+	fd = open("map1.ber", O_RDONLY);
+	x = 0;
+	arr = ft_calloc(j + 1, sizeof(char * ));
+	while ((string = get_next_line(fd)))
+	{
+		arr[x++] = ft_strtrim(string, "\n");
+		free(string);
+	}
+	for (int z = 0; arr[z] != 0; z++)
+	{
+		printf("%s\n", arr[z]);
+	}
+	close (fd);
+	return (arr);
+}
+
+// int	floodfill()
+
 int	no_event(t_ptr *data)
 {
-	
-	mlx_key_hook(data->win_ptr, w_up, &data);
 	return (0);
 }
 
@@ -30,10 +50,11 @@ int	no_event(t_ptr *data)
 
 int check_walls(char *string)
 {
-    int i = 0;
+    int i;
    	static int count;
     int len = ft_strlen(string);
 
+	i = 0;
     if (string[len - 1] == '\n')
 		len--;
 
@@ -123,7 +144,7 @@ int check_rectangular(char *string)
 {
     static size_t first_len;
 	size_t len;
-	
+
 	len = ft_strlen(string);
 	if (string[len - 1] == '\n')
 		len -= 1;
@@ -143,32 +164,33 @@ int		create_map(int	fd, t_ptr *ptr, void *background, void *chibi_maruko, void *
 	int		i;
 	int		j;
 	int 	len;
-	// int		**arr;
+	// char	**arr;
 
+	printf("hiy\n");
 	j = 0;
 	while ((string = get_next_line(fd)))
 	{
+		// printf("String:[%s]", string);
 		check_rectangular(string);
 		check_walls(string);
 		// check_number(string);
 		len = ft_strlen(string);
-		i = 0;
+		// i = 0;
 		if (string[len - 1] == '\n')
 			len -= 1;
-		while (i < len)
-		{
-			i++;
-			// arr = malloc(i*(sizeof(char)));
-			// arr[i] = string[i];
-		}
+		// while (i < len)
+		// {
+		// 	i++;
+		// }
+		i = len;
 		j++;
-		// arr[j] = malloc(j*(sizeof(char)));
-		// arr[j] = string[j];
 	}
+	printf("byebyeyes\n");
+	close(fd);
+	chgarray(i, j);
 	ptr->win_ptr = mlx_new_window(ptr->mlx_ptr, i*50, j*50, "CHIBI MARUKO");
 	if (ptr->win_ptr == NULL)
 		return (1);
-	close(fd);
 
 	fd = open("map1.ber", O_RDONLY);
 	j = 0;
@@ -215,19 +237,17 @@ int	main(void)
 	if (wall == NULL)
 		return (1);
 
-	printf("hi");
-	mlx_loop_hook(ptr.mlx_ptr, no_event, &ptr);
-	printf("%p\n", &ptr.win_ptr);
+	// printf("hi");
 	// mlx_key_hook(ptr.win_ptr, w_up, &ptr);
 
 	int	fd;
 	fd = open("map1.ber", O_RDONLY);
 	
 	create_map(fd, &ptr, background, chibi_maruko, wall);
-
+	mlx_loop_hook(ptr.mlx_ptr, no_event, &ptr);
+	mlx_key_hook(ptr.win_ptr, w_up, &ptr);
 	mlx_loop(ptr.mlx_ptr);
 
-	printf("111");
 	// mlx_destroy_display(ptr.mlx_ptr);
 	// mlx_destroy_window(ptr.mlx_ptr, ptr.win_ptr);
 }
