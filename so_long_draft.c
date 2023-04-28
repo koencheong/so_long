@@ -1,17 +1,26 @@
 #include "so_long.h"
 
-// int	handle_no_event()
-// {
-// 	return (0);
-// }
+int	handle_no_event()
+{
+	return (0);
+}
 
-// int	w_up(int keysym, t_ptr *ptr)
-// {
-// 	(void)ptr;
-// 	if (keysym == XK_W)
-// 		mlx_put_image_to_window(ptr.mlx_ptr, ptr.win_ptr, chibi_maruko, (x-1)*100, 0*110);
-// 	return (0);
-// }
+int w_up(int keysym, t_ptr *ptr)
+{
+	printf("hihi\n");
+	if (keysym == 13)
+		printf("hi\n");
+		// mlx_put_image_to_window(ptr.mlx_ptr, ptr.win_ptr, chibi_maruko, (x-1)*100, 0*110);
+	(void)ptr;
+	return (0);
+}
+
+int	no_event(t_ptr *data)
+{
+	
+	mlx_key_hook(data->win_ptr, w_up, &data);
+	return (0);
+}
 
 // int	s_down(int keysym, t_ptr *ptr)
 
@@ -128,39 +137,13 @@ int check_rectangular(char *string)
     return (0);
 }
 
-// void	read_map()
-// {
-// 	int		fd;
-// 	char	string[1024];
-// 	ssize_t	bytes_read;
-	
-// 	bytes_read = 0;
-// 	fd = open("map.ber", O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		perror("Error opening file");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	bytes_read = read(fd, string, sizeof(string));
-// 	if (bytes_read == -1)
-// 	{
-// 		perror("Error reading file");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	string[bytes_read] = '\0';
-// 	close(fd);
-
-// 	check_1(string);
-// 	check_2(string);
-// }	
-
 int		create_map(int	fd, t_ptr *ptr, void *background, void *chibi_maruko, void *wall)
 {
 	char	*string;
 	int		i;
 	int		j;
 	int 	len;
-	int		**arr;
+	// int		**arr;
 
 	j = 0;
 	while ((string = get_next_line(fd)))
@@ -175,12 +158,12 @@ int		create_map(int	fd, t_ptr *ptr, void *background, void *chibi_maruko, void *
 		while (i < len)
 		{
 			i++;
-			arr = malloc(i*(sizeof(char)));
-			arr[i] = string[i];
+			// arr = malloc(i*(sizeof(char)));
+			// arr[i] = string[i];
 		}
 		j++;
-		arr[j] = malloc(j*(sizeof(char)));
-		arr[j] = string[j];
+		// arr[j] = malloc(j*(sizeof(char)));
+		// arr[j] = string[j];
 	}
 	ptr->win_ptr = mlx_new_window(ptr->mlx_ptr, i*50, j*50, "CHIBI MARUKO");
 	if (ptr->win_ptr == NULL)
@@ -222,7 +205,6 @@ int	main(void)
 	ptr.mlx_ptr = mlx_init();
 	if (ptr.mlx_ptr == NULL)
 		return (1);
-
 	background = mlx_xpm_file_to_image(ptr.mlx_ptr, "images/purple.xpm", &size, &size);
 	if (background == NULL)
 		return (1);
@@ -233,7 +215,10 @@ int	main(void)
 	if (wall == NULL)
 		return (1);
 
-	// mlx_key_hook(ptr.win_ptr, &w_up, &ptr);
+	printf("hi");
+	mlx_loop_hook(ptr.mlx_ptr, no_event, &ptr);
+	printf("%p\n", &ptr.win_ptr);
+	// mlx_key_hook(ptr.win_ptr, w_up, &ptr);
 
 	int	fd;
 	fd = open("map1.ber", O_RDONLY);
@@ -242,6 +227,7 @@ int	main(void)
 
 	mlx_loop(ptr.mlx_ptr);
 
-	mlx_destroy_display(ptr.mlx_ptr);
-	mlx_destroy_window(ptr.mlx_ptr, ptr.win_ptr);
+	printf("111");
+	// mlx_destroy_display(ptr.mlx_ptr);
+	// mlx_destroy_window(ptr.mlx_ptr, ptr.win_ptr);
 }

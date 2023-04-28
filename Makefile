@@ -2,9 +2,11 @@ NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC = so_long_draft.c
-LIB = -L/usr/local/lib/libmlx.a 
-INC = -lmlx -lGL -lX11 -lXext
+# LIB = -L/usr/local/lib/libmlx.a 
+# INC = -lmlx -lGL -lX11 -lXext
+INC = -lmlx -framework OpenGL -framework AppKit
 
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
@@ -17,8 +19,8 @@ print:
 gnl: 
 	make -C libft/get_next_line
 
-$(NAME): libft1 print gnl
-	$(CC) $(CFLAGS) $(SRC) -L./libft/ft_printf -lftprintf -L./libft/get_next_line -lftgnl $(LIB) $(INC) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -L./libft/ft_printf -lftprintf -L./libft/get_next_line -lftgnl $(LIB) $(INC) -o $(NAME)
 
 clean:
 	rm -f libft/ft_printf/*.o libft/get_next_line/*.o libft/*.o
