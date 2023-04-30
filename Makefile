@@ -34,7 +34,7 @@
 NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC = so_long.c map_checker.c game.c
+SRC = so_long.c map_checker.c
 LIB = -L/usr/local/lib/libmlx.a 
 INC = -lmlx -lGL -lX11 -lXext
 

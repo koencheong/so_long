@@ -1,15 +1,17 @@
 #include "so_long.h"
 
-void	floodfill(char **temp_arr, int y, int x)
+void	floodfill(char **temp_arr, int y, int x, t_variables *data)
 {
 	if (temp_arr[y][x] == 'P' || temp_arr[y][x] == 'E' || 
 		temp_arr[y][x] == 'C' || temp_arr[y][x] == '0')
 	{
+		if (temp_arr[y][x] == 'C')
+			data->collectibles += 1;
 		temp_arr[y][x] = 'X';
-		floodfill(temp_arr, (y - 1), x);
-		floodfill(temp_arr, y, (x - 1));
-		floodfill(temp_arr, (y + 1), x);
-		floodfill(temp_arr, y, (x + 1));
+		floodfill(temp_arr, (y - 1), x, data);
+		floodfill(temp_arr, y, (x - 1), data);
+		floodfill(temp_arr, (y + 1), x, data);
+		floodfill(temp_arr, y, (x + 1), data);
 	}
 }
 
@@ -26,7 +28,7 @@ void	check_valid_path(t_variables *data, char **temp_arr)
 		{
 			if (temp_arr[y][x] == 'P')
 			{
-				floodfill(temp_arr, y, x);
+				floodfill(temp_arr, y, x, data);
 				data->x = x;
 				data->y = y;
 			}
@@ -43,7 +45,8 @@ void	check_valid_path(t_variables *data, char **temp_arr)
 		{
 			if (temp_arr[y][x] != '1' && temp_arr[y][x] != 'X')
 			{
-				ft_printf("Map error: no valid path.\n");
+				ft_printf("Error\n");
+				ft_printf("Map has no valid path.\n");
 				exit(EXIT_FAILURE);
 			}
 			x++;
@@ -63,7 +66,7 @@ void	create_double_array(int j, t_variables *data)
 	int		fd;
 	char	**temp_arr;
 	
-	fd = open("map1.ber", O_RDONLY);
+	fd = open(data->map, O_RDONLY);
 	x = 0;
 	data->ori_arr = ft_calloc(j + 1, sizeof(char *));
 	temp_arr = ft_calloc(j + 1, sizeof(char *));
@@ -74,7 +77,7 @@ void	create_double_array(int j, t_variables *data)
 	}
 	close(fd);
 
-	fd = open("map1.ber", O_RDONLY);
+	fd = open(data->map, O_RDONLY);
 	x = 0;
 	while ((string = get_next_line(fd)))
 	{
@@ -83,7 +86,6 @@ void	create_double_array(int j, t_variables *data)
 	}
 	
 	close (fd);
-	num_collectibles(data);
 	check_valid_path(data, temp_arr);
 }
 
@@ -102,7 +104,8 @@ int check_walls(char *string)
     {
         if (string[i] != '1')
         {
-            printf("11Error! Map should be surrounded by walls.\n");
+			ft_printf("Error\n");
+        	ft_printf("Map should be surrounded by walls.\n");
             exit(EXIT_FAILURE);
         }
         i++;
@@ -115,7 +118,8 @@ int check_walls(char *string)
     {
         if (string[0] != '1' || string[len - 1] != '1')
         {
-        	printf("22Error! Map should be surrounded by walls.\n");
+        	ft_printf("Error\n");
+			ft_printf("Map should be surrounded by walls.\n");
         	exit(EXIT_FAILURE);
         }
         i++;
@@ -126,7 +130,8 @@ int check_walls(char *string)
 	{
 		if (string[i] != '1')
         {
-            printf("33Error! Map should be surrounded by walls.\n");
+            ft_printf("Error\n");
+			ft_printf("Map should be surrounded by walls.\n");
             exit(EXIT_FAILURE);
         }
         i++;
@@ -159,7 +164,8 @@ int	check_number(char *string) // check if there's only one exit, one player and
 	{
 		if (n_exit != 1 || n_player != 1 || n_coll < 1)
 		{
-			printf("Error! Map should consist of one exit, one player and at least one collectible.\n");
+			ft_printf("Error\n");
+			ft_printf("Map should consist of one exit, one player and at least one collectible.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -179,13 +185,15 @@ int check_rectangular(char *string)
 		first_len = len;
 		if (string[0] == '\n')
 		{
-			ft_printf("Error! Map is not rectangular.\n");
+			ft_printf("Error\n");
+			ft_printf("Map is not rectangular.\n");
      		exit(EXIT_FAILURE);
 		}
 	}
     else if (len != first_len)
 	{
-        ft_printf("Error! Map is not rectangular.\n");
+        ft_printf("Error\n");
+		ft_printf("Map is not rectangular.\n");
         exit(EXIT_FAILURE);
     }
     return (0);
@@ -213,11 +221,12 @@ int		create_map(int	fd, t_variables  *data)
 	}
 	close(fd);
 	create_double_array(j, data);
+	// data->win_ptr = mlx_new_window(data->mlx_ptr, i*64, (j+1)*64, "CHIBI MARUKO");
 	data->win_ptr = mlx_new_window(data->mlx_ptr, i*64, j*64, "CHIBI MARUKO");
 	if (data->win_ptr == NULL)
 		return (1);
 
-	fd = open("map1.ber", O_RDONLY);
+	fd = open(data->map, O_RDONLY);
 	j = 0;
 	while ((string = get_next_line(fd)))
 	{

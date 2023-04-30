@@ -1,6 +1,4 @@
 #include <mlx.h>
-// #include <X11/X.h>
-#include <stdlib.h>
 #include <X11/keysym.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -15,30 +13,32 @@
 #define A 97
 #define S 115
 #define D 100
+#define ESC 65307
+
+// MAC
+// #define W 13
+// #define A 0
+// #define S 1
+// #define D 2
+// #define ESC 53
 
 typedef struct s_variables
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*background;
-	void	*chibi_maruko;
-	void	*wall;
-	void	*exit;
-	void	*coll;
-	int		size;
-	char	**ori_arr;
-	int		x;
-	int		y;
-	int		collected;
-	int		num_c;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*background;
+	void		*chibi_maruko;
+	void		*wall;
+	void		*exit;
+	void		*coll;
+	int			size;
+	char		**ori_arr;
+	int			x;
+	int			y;
+	int			collected;
+	int			collectibles;
+	int			num_movement;
+	const char	*map;
 } t_variables;
 
-typedef	struct s_images
-{
-	int	width;
-	int	height;
-} t_img;
-
 int		create_map(int	fd, t_variables *ptr);
-void	num_collectibles(t_variables *ptr);
-int		movement(char **arr, t_variables *ptr);
