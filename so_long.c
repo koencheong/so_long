@@ -10,129 +10,99 @@ void	game_over(t_variables *data)
 {
 	if (data->collected == data->collectibles)
 	{
-		ft_printf("\n|| I love pudding eeeeee ||\n\n");
+		ft_printf("\n|| I love pudding ||\n\n");
 		exit(EXIT_SUCCESS);
 	}
 	else
 		ft_printf("Please collect all remaining pudding before exiting.\n");
 }
 
+void	display_num_movements(t_variables *data)
+{
+    char	*num_movements_str;
+    char	*message;
+
+    num_movements_str = ft_itoa(data->num_movement);
+    message = ft_strjoin("Number of movements: ", num_movements_str);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->white, 89, data->window_y);
+    mlx_string_put(data->mlx_ptr, data->win_ptr, 15, data->window_y + 20, 0, message);
+    free(num_movements_str);
+    free(message);
+}
+
+void	move_character(t_variables *data, int new_y, int new_x)
+{
+	if (data->ori_arr[new_y][new_x] == '1')
+		return;
+	
+	if (data->ori_arr[new_y][new_x] == 'C')
+	{
+		data->collected++;
+		data->ori_arr[new_y][new_x] = '0';
+	}
+	
+	if (data->ori_arr[new_y][new_x] == 'E')
+		game_over(data);
+	else
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background, data->x*64, data->y*64);
+		data->y = new_y;
+		data->x = new_x;
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, data->x*64, data->y*64);
+		data->num_movement++;
+		display_num_movements(data);
+		// ft_printf("Number of movements: %d\n", data->num_movement);
+	}
+}
+
 int	key_hook(int key, t_variables *data)
 {
-	// for (int z = 0; data->ori_arr[z] != 0; z++)
-	// 	printf("[%s]\n", data->ori_arr[z]);
 	if (key == ESC)
 	{
 		ft_printf("EXIT\n");
 		exit(EXIT_SUCCESS);
 	}
 	if (key == W)
-	{
-		if (data->ori_arr[data->y - 1][data->x] != '1')
-		{
-			if (data->ori_arr[data->y - 1][data->x] == 'C')
-			{
-				data->collected++;
-				data->ori_arr[data->y - 1][data->x] = '0';
-			}
-			if (data->ori_arr[data->y - 1][data->x] == 'E')
-				game_over(data);
-			else
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background, data->x*64, data->y*64);
-				data->y--;
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, data->x*64, data->y*64);
-				data->num_movement++;
-				ft_printf("Number of movements: %d\n", data->num_movement);
-			}
-		}
-	}
-	if (key == A)
-	{
-		if (data->ori_arr[data->y][data->x - 1] != '1')
-		{
-			if (data->ori_arr[data->y][data->x - 1] == 'C')
-			{
-				data->collected++;
-				data->ori_arr[data->y][data->x - 1] = '0';
-			}
-			if (data->ori_arr[data->y][data->x - 1] == 'E')
-				game_over(data);
-			else
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background, data->x*64, data->y*64);
-				data->x--;
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, data->x*64, data->y*64);
-				data->num_movement++;
-				ft_printf("Number of movements: %d\n", data->num_movement);
-			}
-		}
-	}
-	if (key == S)
-	{
-		if (data->ori_arr[data->y + 1][data->x] != '1')
-		{
-			if (data->ori_arr[data->y + 1][data->x] == 'C')
-			{
-				data->collected++;
-				data->ori_arr[data->y + 1][data->x] = '0';
-			}
-			if (data->ori_arr[data->y + 1][data->x] == 'E')
-				game_over(data);
-			else
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background, data->x*64, data->y*64);
-				data->y++;
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, data->x*64, data->y*64);
-				data->num_movement++;
-				ft_printf("Number of movements: %d\n", data->num_movement);
-			}
-		}
-	}
-	if (key == D)
-	{
-		if (data->ori_arr[data->y][data->x + 1] != '1')
-		{
-			if (data->ori_arr[data->y][data->x + 1] == 'C')
-			{
-				data->collected++;
-				data->ori_arr[data->y][data->x + 1] = '0';
-			}
-			if (data->ori_arr[data->y][data->x + 1] == 'E')
-				game_over(data);
-			else 
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background, data->x*64, data->y*64);
-				data->x++;
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, data->x*64, data->y*64);
-				data->num_movement++;
-				ft_printf("Number of movements: %d\n", data->num_movement);
-			}
-		}
-	}
+		move_character(data, data->y - 1, data->x);
+	else if (key == A)
+		move_character(data, data->y, data->x - 1);
+	else if (key == S)
+		move_character(data, data->y + 1, data->x);
+	else if (key == D)
+		move_character(data, data->y, data->x + 1);
 	return (0);
+}
+
+void	setup(int	fd, t_variables *data)
+{
+	data->window_y = 0;
+	data->collectibles = 0;
+	data->collected = 0;
+	data->num_movement = 0;
+	data->mlx_ptr = mlx_init();
+	data->background = mlx_xpm_file_to_image(data->mlx_ptr, "images/purple.xpm", &data->size, &data->size);
+	data->chibi_maruko = mlx_xpm_file_to_image(data->mlx_ptr, "images/maruko.xpm", &data->size, &data->size);
+	data->wall = mlx_xpm_file_to_image(data->mlx_ptr, "images/tree.xpm", &data->size, &data->size);
+	data->exit = mlx_xpm_file_to_image(data->mlx_ptr, "images/exit.xpm", &data->size, &data->size);
+	data->coll = mlx_xpm_file_to_image(data->mlx_ptr, "images/coll.xpm", &data->size, &data->size);
+	data->enemy = mlx_xpm_file_to_image(data->mlx_ptr, "images/enemy.xpm", &data->size, &data->size);
+	data->white = mlx_xpm_file_to_image(data->mlx_ptr, "images/white.xpm", &data->size, &data->size);
+
+	
+	create_map(fd, data);
+	display_num_movements(data);
+	mlx_loop_hook(data->mlx_ptr, no_event, data);
+	mlx_key_hook(data->win_ptr, key_hook, data);
 }
 
 int	main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
+		int			fd;
 		t_variables	data;
 
 		data.map = argv[1];
-		data.collectibles = 0;
-		data.collected = 0;
-		data.num_movement = 0;
-		data.mlx_ptr = mlx_init();
-		if (data.mlx_ptr == NULL)
-			return (1);
-		data.background = mlx_xpm_file_to_image(data.mlx_ptr, "images/purple.xpm", &data.size, &data.size);
-		data.chibi_maruko = mlx_xpm_file_to_image(data.mlx_ptr, "images/maruko.xpm", &data.size, &data.size);
-		data.wall = mlx_xpm_file_to_image(data.mlx_ptr, "images/tree.xpm", &data.size, &data.size);
-		data.exit = mlx_xpm_file_to_image(data.mlx_ptr, "images/exit.xpm", &data.size, &data.size);
-		data.coll = mlx_xpm_file_to_image(data.mlx_ptr, "images/coll.xpm", &data.size, &data.size);
-
-		int	fd;
 		fd = open(data.map, O_RDONLY);
 		if (fd == -1)
 		{
@@ -140,10 +110,7 @@ int	main(int argc, char **argv)
 			ft_printf("Invalid map file.\n");
 			exit(EXIT_FAILURE);
 		}
-		
-		create_map(fd, &data);
-		mlx_loop_hook(data.mlx_ptr, no_event, &data);
-		mlx_key_hook(data.win_ptr, key_hook, &data);
+		setup(fd, &data);
 		mlx_loop(data.mlx_ptr);
 	
 	}

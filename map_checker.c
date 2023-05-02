@@ -53,10 +53,30 @@ void	check_valid_path(t_variables *data, char **temp_arr)
 		}
 		y++;
 	}
-	// for (int z = 0; data->ff_arr[z] != 0; z++)
-	// 	printf("%s\n", data->ff_arr[z]);	
-	// for (int z = 0; data->ori_arr[z] != 0; z++)
-	// 	printf("%s\n", data->ori_arr[z]);	
+}
+
+void	print_map(int	j, int	i, t_variables *data)
+{
+	j = 0;
+	while (data->ori_arr[j] != NULL)
+	{
+		i = 0;
+		while (data->ori_arr[j][i] != '\0')
+		{
+			if (data->ori_arr[j][i] == '1')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->wall, i*64, j*64);
+			if (data->ori_arr[j][i] == '0')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background, i*64, j*64);
+			if (data->ori_arr[j][i] == 'P')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, i*64, j*64);
+			if (data->ori_arr[j][i] == 'E')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->exit, i*64, j*64);
+			if (data->ori_arr[j][i] == 'C')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->coll, i*64, j*64);
+			i++;
+		}
+		j++;
+	}
 }
 
 void	create_double_array(int j, t_variables *data)
@@ -84,9 +104,16 @@ void	create_double_array(int j, t_variables *data)
 		temp_arr[x++] = ft_strtrim(string, "\n");
 		free(string);
 	}
-	
 	close (fd);
 	check_valid_path(data, temp_arr);
+	
+	j = 0;
+	while (temp_arr[j] != NULL)
+	{
+		free(temp_arr[j]);
+		j++;
+	}
+	free(temp_arr);
 }
 
 int check_walls(char *string)
@@ -139,7 +166,7 @@ int check_walls(char *string)
     return (0);
 }
 
-int	check_number(char *string) // check if there's only one exit, one player and at least one collectible.
+int	check_number(char *string)
 {
 	int	i;
 	static int	n_exit;
@@ -209,7 +236,6 @@ int		create_map(int	fd, t_variables  *data)
 	j = 0;
 	while ((string = get_next_line(fd)))
 	{
-		// printf("[%s]\n", string);
 		check_rectangular(string);
 		check_walls(string);
 		check_number(string);
@@ -218,38 +244,20 @@ int		create_map(int	fd, t_variables  *data)
 			len -= 1;
 		i = len;
 		j++;
+		free(string);
 	}
 	close(fd);
 	create_double_array(j, data);
-	// data->win_ptr = mlx_new_window(data->mlx_ptr, i*64, (j+1)*64, "CHIBI MARUKO");
-	data->win_ptr = mlx_new_window(data->mlx_ptr, i*64, j*64, "CHIBI MARUKO");
+	data->window_y = j * 64;
+	data->win_ptr = mlx_new_window(data->mlx_ptr, i*64, (j+1)*64, "CHIBI MARUKO");
+	i = 0;
+	while (i < len)
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->white, i*64, j*64);
+		i++;
+	}
+	print_map(i, j, data);
 	if (data->win_ptr == NULL)
 		return (1);
-
-	fd = open(data->map, O_RDONLY);
-	j = 0;
-	while ((string = get_next_line(fd)))
-	{
-		len = ft_strlen(string);
-		
-		i = 0;
-		if (string[len - 1] == '\n')
-			len -= 1;
-		while (i < len)
-		{
-			if (string[i] == '1')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->wall, i*64, j*64);
-			if (string[i] == '0')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->background, i*64, j*64);
-			if (string[i] == 'P')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, i*64, j*64);
-			if (string[i] == 'E')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->exit, i*64, j*64);
-			if (string[i] == 'C')
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->coll, i*64, j*64);
-			i++;
-		}
-		j++;
-	}
 	return (0);
 }

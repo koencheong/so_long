@@ -33,7 +33,7 @@
 # WINDOW (RELINKING PROBLEM)
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 SRC = so_long.c map_checker.c
 LIB = -L/usr/local/lib/libmlx.a 
 INC = -lmlx -lGL -lX11 -lXext
