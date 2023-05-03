@@ -51,15 +51,26 @@ void	move_character(t_variables *data, int new_y, int new_x)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->chibi_maruko, data->x*64, data->y*64);
 		data->num_movement++;
 		display_num_movements(data);
-		// ft_printf("Number of movements: %d\n", data->num_movement);
 	}
 }
+
+// int	handle_close(int key, t_variables	*data)
+// {
+// 	if (key == 17)
+// 	{
+// 		ft_printf("EXIT\n");
+// 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+// 		exit(EXIT_SUCCESS);
+// 	}
+// 	return (0);
+// }
 
 int	key_hook(int key, t_variables *data)
 {
 	if (key == ESC)
 	{
 		ft_printf("EXIT\n");
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit(EXIT_SUCCESS);
 	}
 	if (key == W)
@@ -82,9 +93,10 @@ void	setup(int	fd, t_variables *data)
 	data->mlx_ptr = mlx_init();
 	data->background = mlx_xpm_file_to_image(data->mlx_ptr, "images/purple.xpm", &data->size, &data->size);
 	data->chibi_maruko = mlx_xpm_file_to_image(data->mlx_ptr, "images/maruko.xpm", &data->size, &data->size);
+	data->chibi_marukob4 = mlx_xpm_file_to_image(data->mlx_ptr, "images/marukob4.xpm", &data->size, &data->size);
 	data->wall = mlx_xpm_file_to_image(data->mlx_ptr, "images/tree.xpm", &data->size, &data->size);
-	data->exit = mlx_xpm_file_to_image(data->mlx_ptr, "images/exit.xpm", &data->size, &data->size);
-	data->coll = mlx_xpm_file_to_image(data->mlx_ptr, "images/coll.xpm", &data->size, &data->size);
+	data->exit = mlx_xpm_file_to_image(data->mlx_ptr, "images/door2.xpm", &data->size, &data->size);
+	data->coll = mlx_xpm_file_to_image(data->mlx_ptr, "images/pudding_bg.xpm", &data->size, &data->size);
 	data->enemy = mlx_xpm_file_to_image(data->mlx_ptr, "images/enemy.xpm", &data->size, &data->size);
 	data->white = mlx_xpm_file_to_image(data->mlx_ptr, "images/white.xpm", &data->size, &data->size);
 
@@ -93,6 +105,7 @@ void	setup(int	fd, t_variables *data)
 	display_num_movements(data);
 	mlx_loop_hook(data->mlx_ptr, no_event, data);
 	mlx_key_hook(data->win_ptr, key_hook, data);
+	// mlx_hook(data->win_ptr, 17, 0, handle_close, data);
 }
 
 int	main(int argc, char **argv)

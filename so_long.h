@@ -23,6 +23,7 @@ typedef struct s_variables
 	void		*win_ptr;
 	void		*background;
 	void		*chibi_maruko;
+	void		*chibi_marukob4;
 	void		*wall;
 	void		*exit;
 	void		*coll;
