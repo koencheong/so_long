@@ -1,7 +1,7 @@
 # MAC
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 SRC = 0_so_long.c 2_map_checker.c 5_game.c 4_print_map.c 3_valid_path_checker.c 1_create_map.c
 INC = -lmlx -framework OpenGL -framework AppKit
 

@@ -66,6 +66,7 @@ int	main(int argc, char **argv)
 		{
 			ft_printf("Error\n");
 			ft_printf("Invalid map file.\n");
+			system("leaks so_long");
 			exit(EXIT_FAILURE);
 		}
 		setup(fd, &data);
@@ -73,5 +74,6 @@ int	main(int argc, char **argv)
 	}
 	ft_printf("Error\n");
 	ft_printf("Please execute the game as follow: [./so_long] [map]");
+	system("leaks so_long");
 	exit(EXIT_FAILURE);
 }

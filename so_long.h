@@ -71,6 +71,8 @@ void	check_number(char *string);
 void	check_rectangular(char *string);
 void	check_invalid_char(char *string, t_variables *data);
 void	print_map(int j, int i, t_variables *data);
+int		checker(int j, char *string, char *newstring, int fd);
+void	free_func(char **array);
 
 #endif
 // for (int z = 0; data->ori_arr[z] != 0; z++)

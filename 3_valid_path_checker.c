@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   valid_path_checker.c                               :+:      :+:    :+:   */
+/*   3_valid_path_checker.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:21:46 by kcheong           #+#    #+#             */
-/*   Updated: 2023/05/04 16:38:29 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/04 20:35:05 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	after_floodfill(char **temp_arr)
 			{
 				ft_printf("Error\n");
 				ft_printf("Map has no valid path.\n");
+				system("leaks so_long");
 				exit(EXIT_FAILURE);
 			}
 			x++;
