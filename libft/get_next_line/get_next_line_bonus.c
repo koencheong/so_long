@@ -6,7 +6,7 @@
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:38:43 by kcheong           #+#    #+#             */
-/*   Updated: 2023/04/23 12:36:42 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:44:20 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*read_join(int fd, char *storage, char *buffer)
 		else
 			storage = join_free(storage, buffer);
 		if (ft_strchr(storage, '\n'))
-				break ;
+			break ;
 	}
 	free(buffer);
 	return (storage);
@@ -106,10 +106,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	storage[fd] = read_join(fd, storage[fd], buffer);
 	if (!storage[fd] || *storage[fd] == '\0')
-	{
-		// free(storage[fd]);
 		return (NULL);
-	}
 	line = return_line(storage[fd]);
 	storage[fd] = store_extra(storage[fd]);
 	return (line);
@@ -118,10 +115,8 @@ char	*get_next_line(int fd)
 // int	main(void)
 // {
 // 	char *res;
-	
 // 	int	fd1 = open("big_line_no_nl.txt", O_RDONLY);
 // 	int	fd2 = open("text2.txt", O_RDONLY);
-	
 // 	res = get_next_line(fd1);
 // 	printf("Result 1 = [%s]\n", res);
 // 	free(res);
