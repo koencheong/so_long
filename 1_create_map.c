@@ -12,6 +12,8 @@
 
 #include "so_long.h"
 
+// 5) Same process as the previous function but this array is for floodfill,
+//    which is to check if there's a valid path.
 void	create_temp_arr(int fd, int x, int j, t_variables *data)
 {
 	char	**temp_arr;
@@ -33,6 +35,9 @@ void	create_temp_arr(int fd, int x, int j, t_variables *data)
 	free_func(temp_arr);
 }
 
+// 4) Until now only i started using double array, and i check if there's
+// 	  invalid character string by string before storing it in the 2D array. 
+// 	  Then i create another temporary 2D array for floodfill.
 void	create_double_array(int j, t_variables *data)
 {
 	char	*string;
@@ -54,6 +59,9 @@ void	create_double_array(int j, t_variables *data)
 	create_temp_arr(fd, x, j, data);
 }
 
+// 3) Create a window according to the size of my map (len for x-axis and
+// 	  j for the y-axis),  but extra one row for the movement number bar.
+//    Then put images to the window using the 2D array.
 void	create_map_helper(int j, int len, t_variables *data)
 {
 	int	i;
@@ -73,6 +81,7 @@ void	create_map_helper(int j, int len, t_variables *data)
 	print_map(i, j, data);
 }
 
+// 1)
 void	create_map(int fd, t_variables *data)
 {
 	int		j;
@@ -90,6 +99,7 @@ void	create_map(int fd, t_variables *data)
 	close(fd);
 }
 
+// 2)
 int	checker(int j, char *string, char *newstring, int fd)
 {
 	int		i;

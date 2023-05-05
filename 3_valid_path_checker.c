@@ -6,12 +6,13 @@
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:21:46 by kcheong           #+#    #+#             */
-/*   Updated: 2023/05/04 20:35:05 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/05 10:58:51 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+// 5b)
 void	floodfill(char **temp_arr, int y, int x, t_variables *data)
 {
 	if (temp_arr[y][x] == 'P' || temp_arr[y][x] == 'E' ||
@@ -27,6 +28,7 @@ void	floodfill(char **temp_arr, int y, int x, t_variables *data)
 	}
 }
 
+// 5c)
 void	after_floodfill(char **temp_arr)
 {
 	int	x;
@@ -52,6 +54,7 @@ void	after_floodfill(char **temp_arr)
 	}
 }
 
+// 5a) Start floodfilling from the player's position.
 void	check_valid_path(t_variables *data, char **temp_arr)
 {
 	int	x;

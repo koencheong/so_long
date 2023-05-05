@@ -6,12 +6,13 @@
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:09:50 by kcheong           #+#    #+#             */
-/*   Updated: 2023/05/04 21:00:04 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/05 10:54:56 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+// 2b.ii)
 void	check_walls2(int i, int len, int count, char *string)
 {
 	if (string[len] == '\n' && count != 1)
@@ -35,6 +36,7 @@ void	check_walls2(int i, int len, int count, char *string)
 	}
 }
 
+// 2b.i)
 void	check_walls(char *string)
 {
 	int			i;
@@ -59,6 +61,7 @@ void	check_walls(char *string)
 	check_walls2(i, len, count, string);
 }
 
+// 2c)
 void	check_number(char *string)
 {
 	int			i;
@@ -89,6 +92,9 @@ void	check_number(char *string)
 	}
 }
 
+// 2a) Store the length of the first line and compare subsequent
+//     lines with the first line. Error when there's empty line on
+//     the first line and when it's not rectangular (different length).
 void	check_rectangular(char *string)
 {
 	static size_t	first_len;
@@ -117,6 +123,7 @@ void	check_rectangular(char *string)
 	}
 }
 
+// 4a)
 void	check_invalid_char(char *string, t_variables *data)
 {
 	int	x;
