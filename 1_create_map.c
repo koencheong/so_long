@@ -91,6 +91,8 @@ void	create_map(int fd, t_variables *data)
 
 	j = 0;
 	string = get_next_line(fd);
+	if (string == NULL)
+		exit(ft_printf("Invalid map.\n"));
 	newstring = NULL;
 	len = ft_strlen(string) - 1;
 	j = checker(j, string, newstring, fd);

@@ -6,7 +6,7 @@
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:39:08 by kcheong           #+#    #+#             */
-/*   Updated: 2023/05/04 20:35:16 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:17:01 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	game_over(t_variables *data)
 	if (data->collected == data->collectibles)
 	{
 		ft_printf("\n|| CONGRATS!! ||\n\n");
-		system("leaks so_long");
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -72,7 +71,6 @@ void	move_character(t_variables *data, int new_y, int new_x)
 int	handle_close(void)
 {
 	ft_printf("Program closed.\n");
-	system("leaks so_long");
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -83,7 +81,6 @@ int	key_hook(int key, t_variables *data)
 	{
 		ft_printf("Program closed by ESC.\n");
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		system("leaks so_long");
 		exit(EXIT_SUCCESS);
 	}
 	if (key == W)

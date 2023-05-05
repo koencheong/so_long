@@ -6,7 +6,7 @@
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:09:50 by kcheong           #+#    #+#             */
-/*   Updated: 2023/05/05 10:54:56 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:47:56 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	check_walls2(int i, int len, int count, char *string)
 	{
 		if (string[0] != '1' || string[len - 1] != '1')
 		{
-			ft_printf("Error\nMap should be surrounded by walls.\n");
-			system("leaks so_long");
+			ft_printf("Error\nInvalid map. Is the map surrounded by walls?\n");
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -29,8 +28,7 @@ void	check_walls2(int i, int len, int count, char *string)
 	{
 		if (string[i++] != '1')
 		{
-			ft_printf("Error\nMap should be surrounded by walls.\n");
-			system("leaks so_long");
+			ft_printf("Error\nInvalid map. Is the map surrounded by walls?\n");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -51,8 +49,7 @@ void	check_walls(char *string)
 	{
 		if (string[i] != '1')
 		{
-			ft_printf ("Error\nMap should be surrounded by walls.\n");
-			system("leaks so_long");
+			ft_printf ("Error\nInvalid map. Is the map surrounded by walls?\n");
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -86,7 +83,6 @@ void	check_number(char *string)
 		if (n_exit != 1 || n_player != 1 || n_coll < 1)
 		{
 			ft_printf("Error\nOnly 1E, 1P and at least 1C are allowed.\n");
-			system("leaks so_long");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -110,7 +106,6 @@ void	check_rectangular(char *string)
 		{
 			ft_printf("Error\n");
 			ft_printf("Map is not rectangular.\n");
-			system("leaks so_long");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -118,7 +113,6 @@ void	check_rectangular(char *string)
 	{
 		ft_printf("Error\n");
 		ft_printf("Map is not rectangular.\n");
-		system("leaks so_long");
 		exit(EXIT_FAILURE);
 	}
 }

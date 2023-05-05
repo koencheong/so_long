@@ -31,7 +31,7 @@ fclean: clean
 
 re:	fclean all
 
-# # WINDOW (RELINKING PROBLEM)
+# # WINDOW (RELINK PROBLEM)
 # NAME = so_long
 # CC = gcc
 # CFLAGS = -Wall -Wextra -Werror -fsanitize=address

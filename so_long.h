@@ -37,11 +37,9 @@ typedef struct s_variables
 	void		*win_ptr;
 	void		*background;
 	void		*chibi_maruko;
-	void		*chibi_marukob4;
 	void		*wall;
 	void		*exit;
 	void		*coll;
-	void		*enemy;
 	void		*white;
 	int			size;
 	char		**ori_arr;
@@ -75,5 +73,6 @@ int		checker(int j, char *string, char *newstring, int fd);
 void	free_func(char **array);
 
 #endif
+
 // for (int z = 0; data->ori_arr[z] != 0; z++)
 	// 	printf("[%s]\n", data->ori_arr[z]);

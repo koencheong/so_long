@@ -6,7 +6,7 @@
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:21:46 by kcheong           #+#    #+#             */
-/*   Updated: 2023/05/05 10:58:51 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:15:58 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	after_floodfill(char **temp_arr)
 			{
 				ft_printf("Error\n");
 				ft_printf("Map has no valid path.\n");
-				system("leaks so_long");
 				exit(EXIT_FAILURE);
 			}
 			x++;

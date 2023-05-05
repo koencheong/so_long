@@ -38,15 +38,11 @@ void	setup(int fd, t_variables *data)
 			&data->size, &data->size);
 	data->chibi_maruko = mlx_xpm_file_to_image(data->mlx_ptr,
 			"images/maruko.xpm", &data->size, &data->size);
-	data->chibi_marukob4 = mlx_xpm_file_to_image(data->mlx_ptr,
-			"images/marukob4.xpm", &data->size, &data->size);
 	data->wall = mlx_xpm_file_to_image(data->mlx_ptr, "images/tree.xpm",
 			&data->size, &data->size);
 	data->exit = mlx_xpm_file_to_image(data->mlx_ptr, "images/door2.xpm",
 			&data->size, &data->size);
 	data->coll = mlx_xpm_file_to_image(data->mlx_ptr, "images/pudding_bg.xpm",
-			&data->size, &data->size);
-	data->enemy = mlx_xpm_file_to_image(data->mlx_ptr, "images/enemy.xpm",
 			&data->size, &data->size);
 	data->white = mlx_xpm_file_to_image(data->mlx_ptr, "images/white.xpm",
 			&data->size, &data->size);
@@ -64,9 +60,7 @@ int	main(int argc, char **argv)
 		fd = open(data.map, O_RDONLY);
 		if (fd == -1)
 		{
-			ft_printf("Error\n");
-			ft_printf("Invalid map file.\n");
-			system("leaks so_long");
+			ft_printf("Error\nInvalid map file.\n");
 			exit(EXIT_FAILURE);
 		}
 		setup(fd, &data);
@@ -74,6 +68,5 @@ int	main(int argc, char **argv)
 	}
 	ft_printf("Error\n");
 	ft_printf("Please execute the game as follow: [./so_long] [map]");
-	system("leaks so_long");
 	exit(EXIT_FAILURE);
 }

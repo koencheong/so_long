@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_map.c                                        :+:      :+:    :+:   */
+/*   4_print_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcheong <kcheong@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 18:34:11 by kcheong           #+#    #+#             */
-/*   Updated: 2023/05/04 18:50:57 by kcheong          ###   ########.fr       */
+/*   Updated: 2023/05/04 20:42:18 by kcheong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,17 @@ void	print_map(int j, int i, t_variables *data)
 		}
 		j++;
 	}
+}
+
+void	free_func(char **array)
+{
+	char	**tmp;
+
+	tmp = array;
+	while (tmp && *tmp)
+	{
+		free(*tmp);
+		tmp++;
+	}
+	free(array);
 }
